@@ -1,6 +1,6 @@
 import json
 from typing import Annotated
-from pydantic import BaseModel,  Field,validator
+from pydantic import BaseModel,  Field, field_validator
 import uuid
 from datetime import date, datetime, timedelta
 from enums import Department
@@ -14,7 +14,7 @@ class Student(BaseModel):
     department: Department
     fees_paid: bool
     
-    @validator("date_of_birth")
+    @field_validator("date_of_birth")
     def ensure_16_or_over(cls, v):
         sixteen_years_ago = datetime.now() - timedelta(days=365*16)
         if v > sixteen_years_ago.date():
